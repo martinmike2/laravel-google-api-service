@@ -31,4 +31,9 @@ class GoogleApiClientServiceProvider extends ServiceProvider {
 		return array();
 	}
 
+	public function boot()
+    {
+        $this->package('fuelingbrands/google-api-client', 'fuel.google', $this->getPackagePathRoot());
+    }
+
 }
