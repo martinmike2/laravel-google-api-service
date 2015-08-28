@@ -25,7 +25,7 @@ class GoogleClient
      * @param array|null $scopes
      * @param null $impersonated_email
      */
-    protected function __construct($name, $private_key, $service_account = false, $redirect_uri = null, array $scopes = null, $impersonated_email = null)
+    protected function __construct($name, $private_key, $impersonated_email = null)
     {
         if(isset($scopes)) {
             $this->scopes = new Collection($scopes);
@@ -34,11 +34,7 @@ class GoogleClient
         }
         $client = new \Google_Client();
 
-        if($service_account) {
-            return $this->constructServiceAccountClient($client, $name, $private_key, $impersonated_email);
-        } else {
-            return $this->constructUserAccountClient($client, $name, $private_key, $redirect_uri);
-        }
+        return $this->constructServiceAccountClient($client, $name, $private_key, $impersonated_email);
     }
 
     private function constructServiceAccountClient($client, $name, $private_key, $impersonated_email = null)
@@ -73,7 +69,7 @@ class GoogleClient
      * @param null $impersonated_email
      * @return mixed
      */
-    public static function getInstance($private_key, $scopes = null,  $impersonated_email = null)
+    public static function getInstance($private_key, $scopes = null, $impersonated_email = null)
     {
         if(is_null(static::$instance)) {
             static::$instance = new static($private_key, $scopes, $impersonated_email);
@@ -93,6 +89,7 @@ class GoogleClient
     {
         $client = static::$instance;
         $client->addScope($scope);
+        $this->scopes->push($scope);
     }
 
     /**
@@ -104,6 +101,7 @@ class GoogleClient
     {
         $client = static::$instance;
         $client->addScope($scopes);
+        $this->scopes->merge($scopes);
     }
 
     /**

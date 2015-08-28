@@ -36,4 +36,14 @@ class GoogleApiClientServiceProvider extends ServiceProvider {
         $this->package('fuelingbrands/google-api-client', 'fuel.google', $this->getPackagePathRoot());
     }
 
+    /**
+     * Get the root path of the package
+     *
+     * @return string
+     */
+    protected function getPackagePathRoot()
+    {
+        return realpath(__DIR__.'/../');
+    }
+
 }
