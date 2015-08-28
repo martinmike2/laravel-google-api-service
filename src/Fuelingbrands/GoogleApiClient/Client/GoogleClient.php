@@ -25,7 +25,7 @@ class GoogleClient
      * @param array|null $scopes
      * @param null $impersonated_email
      */
-    protected function __construct($name, $private_key, $impersonated_email = null)
+    public function __construct($name, $private_key, $scopes = null, $impersonated_email = null)
     {
         if(isset($scopes)) {
             $this->scopes = new Collection($scopes);
@@ -34,7 +34,7 @@ class GoogleClient
         }
         $client = new \Google_Client();
 
-        return $this->constructServiceAccountClient($client, $name, $private_key, $impersonated_email);
+        $this->constructServiceAccountClient($client, $name, $private_key, $impersonated_email);
     }
 
     private function constructServiceAccountClient($client, $name, $private_key, $impersonated_email = null)
@@ -46,11 +46,12 @@ class GoogleClient
         );
 
         if(isset($impersonated_email)) {
-            $credentials->sub($impersonated_email);
+            $credentials->sub = $impersonated_email;
         }
 
         $client->setAssertionCredentials($credentials);
 
+        $this->client = $client;
         return $client;
     }
 
@@ -69,13 +70,13 @@ class GoogleClient
      * @param null $impersonated_email
      * @return mixed
      */
-    public static function getInstance($private_key, $scopes = null, $impersonated_email = null)
+    public static function getInstance($name, $private_key, $scopes = null, $impersonated_email = null)
     {
         if(is_null(static::$instance)) {
-            static::$instance = new static($private_key, $scopes, $impersonated_email);
+            static::$instance = new static($name, $private_key, $scopes, $impersonated_email);
         }
 
-        self::refreshToken();
+        self::refreshThisToken();
 
         return static::$instance;
     }
@@ -107,10 +108,11 @@ class GoogleClient
     /**
      *  Refresh the token, if it is expired
      */
-    protected function refreshToken()
+    protected static function refreshThisToken()
     {
-        if ($this->client->getAuth()->isAccessTokenExpired()) {
-            $this->client->getAuth()->refreshTokenWithAssertion();
+
+        if (static::$instance->client->getAuth()->isAccessTokenExpired()) {
+            static::$instance->client->getAuth()->refreshTokenWithAssertion();
         }
     }
 }

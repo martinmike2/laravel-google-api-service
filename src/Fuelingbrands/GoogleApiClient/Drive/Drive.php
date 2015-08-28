@@ -10,20 +10,22 @@ abstract class Drive
     protected $private_key;
     protected $scopes;
     protected $impersonated_email;
+    protected $email;
 
 
-    public function __construct($private_key, $scopes, $impersonated_email)
+    public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
-        $this->client = GoogleClient::getInstance($private_key, $scopes, $impersonated_email);
-        $this->drive = new \Google_Service_Drive($this->client);
+        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
+        $this->drive = new \Google_Service_Drive($this->client->client);
         $this->private_key = $private_key;
         $this->scopes = $scopes;
         $this->impersonated_email = $impersonated_email;
+        $this->email = $email;
     }
 
     public function getService(){
         if (is_null($this->service)) {
-            $this->createService();
+            $this->service = $this->createService();
         }
 
         return $this->service;
