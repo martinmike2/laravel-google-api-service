@@ -4,7 +4,7 @@
  * Class FileResource
  * @package Fuelingbrands\GoogleApiClient\Drive
  */
-class FileResource extends Drive implements DriveServiceInterface
+class FileResource extends Drive
 {
 
     /**

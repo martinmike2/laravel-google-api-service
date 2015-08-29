@@ -4,7 +4,7 @@
  * Class Children
  * @package Fuelingbrands\GoogleApiClient\Drive
  */
-class Children extends Drive
+class ChildrenResource extends Drive
 {
 
     /**
