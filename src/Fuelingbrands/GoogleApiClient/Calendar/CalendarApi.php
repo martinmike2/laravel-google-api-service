@@ -1,22 +1,21 @@
-<?php namespace Fuelingbrands\GoogleApiClient\Drive;
+<?php namespace Fuelingbrands\GoogleApiClient\Calendar;
 
 use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
 use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
 
-abstract class Drive
+abstract class CalendarApi
 {
     use GoogleApiTrait;
-    protected $drive;
+    protected $calendar;
 
     public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
         $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
-        $this->drive = new \Google_Service_Drive($this->client->client);
+        $this->calendar = new \Google_Service_Calendar($this->client);
         $this->private_key = $private_key;
         $this->scopes = $scopes;
         $this->impersonated_email = $impersonated_email;
         $this->email = $email;
     }
 
-    abstract protected function listAll($id = null, $params = []);
 }

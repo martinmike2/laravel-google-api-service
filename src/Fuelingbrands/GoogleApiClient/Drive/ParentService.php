@@ -1,10 +1,10 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Drive;
 
 /**
- * Class ParentResource
+ * Class ParentService
  * @package Fuelingbrands\GoogleApiClient\Drive
  */
-class ParentResource extends Drive
+class ParentService extends Drive
 {
     /**
      * Tell the drive what service to use

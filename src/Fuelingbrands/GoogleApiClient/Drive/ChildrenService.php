@@ -1,10 +1,10 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Drive;
 
 /**
- * Class Children
+ * Class ChildrenService
  * @package Fuelingbrands\GoogleApiClient\Drive
  */
-class ChildrenResource extends Drive
+class ChildrenService extends Drive
 {
 
     /**

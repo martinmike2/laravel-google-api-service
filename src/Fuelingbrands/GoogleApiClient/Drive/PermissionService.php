@@ -1,13 +1,28 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Drive;
 
-class PermissionResource extends Drive
+/**
+ * Class PermissionService
+ * @package Fuelingbrands\GoogleApiClient\Drive
+ */
+class PermissionService extends Drive
 {
 
+    /**
+     * Tell the API what service to use
+     * @return \Google_Service_Drive_Permissions_Resource
+     */
     protected function createService()
     {
         return $this->drive->permissions;
     }
 
+    /**
+     * List all permissions on a file
+     *
+     * @param null $id
+     * @param array $params
+     * @return null
+     */
     protected function listAll($id = null, $params = [])
     {
         if(!is_null($id)) {
@@ -17,6 +32,16 @@ class PermissionResource extends Drive
         return null;
     }
 
+    /**
+     * Insert permissions on a file
+     *
+     * @param $file_id
+     * @param $value
+     * @param $type
+     * @param $role
+     * @param array $params
+     * @return mixed
+     */
     public function insert($file_id, $value, $type, $role, $params = [])
     {
         $permission = new \Google_Service_Drive_Permission();
@@ -27,16 +52,40 @@ class PermissionResource extends Drive
         return $this->getService()->inser($file_id, $permission, $params);
     }
 
+    /**
+     * Remove permissions from a file
+     *
+     * @param $file_id
+     * @param array $params
+     * @return mixed
+     */
     public function delete($file_id, $params = [])
     {
         return $this->getService()-delete($file_id, $params);
     }
 
+    /**
+     * Get a permission from a file
+     *
+     * @param $file_id
+     * @param $permission_id
+     * @param array $params
+     * @return mixed
+     */
     public function get($file_id, $permission_id, $params = [])
     {
         return $this->getService()->get($file_id, $permission_id, $params);
     }
 
+    /**
+     * Update a permission on a file
+     *
+     * @param $file_id
+     * @param $permission_id
+     * @param $new_role
+     * @param array $params
+     * @return mixed
+     */
     public function patch($file_id, $permission_id, $new_role, $params = [])
     {
         $patch = new \Google_Service_Drive_Permission();
@@ -45,6 +94,15 @@ class PermissionResource extends Drive
         return $this->getService()->path($file_id, $permission_id, $patch, $params);
     }
 
+    /**
+     * Update a permission on a file
+     *
+     * @param $file_id
+     * @param $permission_id
+     * @param $new_role
+     * @param array $params
+     * @return mixed
+     */
     public function update($file_id, $permission_id, $new_role, $params = [])
     {
         $permission = $this->get($file_id, $permission_id);

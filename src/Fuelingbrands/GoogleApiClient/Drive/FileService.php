@@ -1,10 +1,10 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Drive;
 
 /**
- * Class FileResource
+ * Class FileService
  * @package Fuelingbrands\GoogleApiClient\Drive
  */
-class FileResource extends Drive
+class FileService extends Drive
 {
 
     /**
@@ -170,7 +170,7 @@ class FileResource extends Drive
      */
     public function watch($file_id, $channel_id, $params = [])
     {
-        $channel_resource = new ChannelResource($this->private_key, $this->scopes, $this->impersonated_email);
+        $channel_resource = new ChannelResource($this->email, $this->private_key, $this->scopes, $this->impersonated_email);
 
         return $this->getService()->watch($file_id, $channel_resource->get($channel_id), $params);
     }

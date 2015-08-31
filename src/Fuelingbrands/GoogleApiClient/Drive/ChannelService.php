@@ -1,10 +1,10 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Drive;
 
 /**
- * Class ChannelResource
+ * Class ChannelService
  * @package Fuelingbrands\GoogleApiClient\Drive
  */
-class ChannelResource extends Drive
+class ChannelService extends Drive
 {
 
     /**
