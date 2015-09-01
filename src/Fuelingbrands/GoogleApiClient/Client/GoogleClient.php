@@ -55,6 +55,11 @@ class GoogleClient
         return $client;
     }
 
+    public function getAuth()
+    {
+        return $this->client->getAuth();
+    }
+
     private function constructUserAccountClient($client, $name, $private_key, $redirect_uri) {
         $client->setAuthConfig($private_key);
         $client->addScope($this->scopes->toArray());

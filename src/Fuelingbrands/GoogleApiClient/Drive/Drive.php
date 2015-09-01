@@ -28,5 +28,10 @@ abstract class Drive
         $this->email = $email;
     }
 
+    public function getClient()
+    {
+        return $this->client;
+    }
+
     abstract protected function listAll($id = null, $params = []);
 }

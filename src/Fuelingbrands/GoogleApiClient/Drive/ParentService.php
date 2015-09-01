@@ -78,16 +78,6 @@ class ParentService extends Drive
      */
     public function get($resource, $child_id, $params = [])
     {
-        if(is_int($resource)) {
-            return $this->getService()->get($child_id, $resource, $params);
-        } elseif (is_string($resource)) {
-            $query = [
-                'q' => "Title = '".$resource."'"
-            ];
-
-            $params = array_merge($params, $query);
-
-            return $this->getService()->get($child_id, $resource, $params);
-        }
+        return $this->getService()->get($child_id, $resource, $params);
     }
 }

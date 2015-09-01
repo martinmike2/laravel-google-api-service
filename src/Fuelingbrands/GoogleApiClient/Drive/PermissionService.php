@@ -49,7 +49,7 @@ class PermissionService extends Drive
         $permission->setType($type);
         $permission->setRole($role);
 
-        return $this->getService()->inser($file_id, $permission, $params);
+        return $this->getService()->insert($file_id, $permission, $params);
     }
 
     /**

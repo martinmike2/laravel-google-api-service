@@ -43,6 +43,11 @@ trait GoogleApiTrait
         return $this->service;
     }
 
+    public function getClient()
+    {
+        return $this->client;
+    }
+
     /**
      * Tell the API which Service to use
      * @return mixed

@@ -23,7 +23,7 @@ class FileService extends Drive
                 'q' => "title = '" . $resource . "'"
             ];
             $params = array_merge($params, $query);
-            return $this->listFiles($params);
+            return $this->listAll(null, $params);
         }
 
         return null;
@@ -41,14 +41,15 @@ class FileService extends Drive
     {
         $file = new \Google_Service_Drive_DriveFile();
         $file->setTitle($resourcename);
+        $file = $this->getService()->insert($file, $params);
 
-        $parent_resource = new ParentResource($this->private_key, $this->scopes, $this->impersonated_email);
+        $parent_resource = new ParentService($this->email, $this->private_key, $this->scopes, $this->impersonated_email);
 
-        $parent = $parent_resource->get($parent);
+        $parent = $parent_resource->get($parent, $file->getId());
 
         $file->setParents($parent);
 
-        return $this->getService()->insert($file, $params);
+        return $this->update($file->getId(), $file);
     }
 
     /**
@@ -103,15 +104,18 @@ class FileService extends Drive
         $copy = new \Google_Service_Drive_DriveFile();
 
         $copy->setTitle($new_title);
+        $copy = $this->getService()->copy($original_id, $copy, $params);
 
-        $parent_resource = new ParentResource($this->private_key, $this->scopes, $this->impersonated_email);
-        if (!is_null($parent_title) && $parent = $parent_resource->get($parent_title)) {
+        $parent_resource = new ParentService($this->email, $this->private_key, $this->scopes, $this->impersonated_email);
+        if (!is_null($parent_title)) {
+            $parent = $parent_resource->get($parent_title, $copy->getId());
             $parent_reference = new \Google_Service_Drive_ParentReference();
             $parent_reference->setId($parent->getId());
             $copy->setParents($parent_reference);
+            $copy = $this->update($copy->getId(), $copy);
         }
 
-        return $this->getService()->copy($original_id, $copy, $params);
+        return $copy;
     }
 
     /**
