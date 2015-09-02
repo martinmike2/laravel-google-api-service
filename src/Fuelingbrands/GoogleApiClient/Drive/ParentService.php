@@ -22,7 +22,7 @@ class ParentService extends Drive
      * @param $child_id
      * @return mixed
      */
-    protected function listAll($child_id = null, $params = [])
+    public function listAll($child_id = null, $params = [])
     {
         if(is_null($child_id)) {
             return null;
@@ -41,10 +41,6 @@ class ParentService extends Drive
      */
     public function insert($resource, $child_id, $params = [])
     {
-        if (is_string($resource)) {
-            $resource = $this->get($resource, $child_id)->getId();
-        }
-
         $parent_ref = new \Google_Service_Drive_ParentReference();
         $parent_ref->setId($resource);
 

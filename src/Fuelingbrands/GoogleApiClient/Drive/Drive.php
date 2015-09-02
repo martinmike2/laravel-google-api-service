@@ -33,5 +33,5 @@ abstract class Drive
         return $this->client;
     }
 
-    abstract protected function listAll($id = null, $params = []);
+    abstract public function listAll($id = null, $params = []);
 }

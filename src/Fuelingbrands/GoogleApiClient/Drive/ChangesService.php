@@ -23,7 +23,7 @@ class ChangesService extends Drive
      * @param array $params
      * @return array
      */
-    protected function listAll($id = null, $params = [])
+    public function listAll($id = null, $params = [])
     {
         $result = [];
         $pageToken = null;

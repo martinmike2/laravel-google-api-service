@@ -24,7 +24,7 @@ class ChildrenService extends Drive
      * @param array $params
      * @return mixed
      */
-    protected function listAll($id = null, $params = [])
+    public function listAll($id = null, $params = [])
     {
         return $this->getService()->listChildren($id, $params);
     }

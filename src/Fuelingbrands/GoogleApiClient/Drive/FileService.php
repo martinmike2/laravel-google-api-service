@@ -16,17 +16,16 @@ class FileService extends Drive
      */
     public function get($resource, $params = [])
     {
-        if (is_int($resource)) {
-            $this->getService()->get($resource, $params);
-        } elseif (is_string($resource)) {
-            $query = [
-                'q' => "title = '" . $resource . "'"
-            ];
-            $params = array_merge($params, $query);
-            return $this->listAll(null, $params);
-        }
+        return $this->getService()->get($resource, $params);
+    }
 
-        return null;
+    public function insertFolder($name, $parent = null, $params = [])
+    {
+        $folder = new \Google_Service_Drive_DriveFile();
+        $folder->setTitle($name);
+        $folder->setParents($parent);
+        $folder->setMimeType('application/vnd.google-apps.folder');
+        return $this->getService()->insert($folder, ['mimeType' => 'application/vnd.google-apps.folder']);
     }
 
     /**
@@ -104,17 +103,12 @@ class FileService extends Drive
         $copy = new \Google_Service_Drive_DriveFile();
 
         $copy->setTitle($new_title);
+
+        $parent = new \Google_Service_Drive_ParentReference();
+        $parent->setId($parent_title);
+
+        $copy->setParents([$parent]);
         $copy = $this->getService()->copy($original_id, $copy, $params);
-
-        $parent_resource = new ParentService($this->email, $this->private_key, $this->scopes, $this->impersonated_email);
-        if (!is_null($parent_title)) {
-            $parent = $parent_resource->get($parent_title, $copy->getId());
-            $parent_reference = new \Google_Service_Drive_ParentReference();
-            $parent_reference->setId($parent->getId());
-            $copy->setParents($parent_reference);
-            $copy = $this->update($copy->getId(), $copy);
-        }
-
         return $copy;
     }
 

@@ -23,7 +23,7 @@ class PermissionService extends Drive
      * @param array $params
      * @return null
      */
-    protected function listAll($id = null, $params = [])
+    public function listAll($id = null, $params = [])
     {
         if(!is_null($id)) {
             return $this->getService()->listPermissions($id, $params);
@@ -44,6 +44,12 @@ class PermissionService extends Drive
      */
     public function insert($file_id, $value, $type, $role, $params = [])
     {
+        $parameters = [
+            'sendNotificationEmails' => false
+        ];
+
+        $params = array_merge($params, $parameters);
+
         $permission = new \Google_Service_Drive_Permission();
         $permission->setValue($value);
         $permission->setType($type);
