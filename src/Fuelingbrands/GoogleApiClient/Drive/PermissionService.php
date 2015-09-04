@@ -97,7 +97,7 @@ class PermissionService extends Drive
         $patch = new \Google_Service_Drive_Permission();
         $patch->setRole($new_role);
 
-        return $this->getService()->path($file_id, $permission_id, $patch, $params);
+        return $this->getService()->patch($file_id, $permission_id, $patch, $params);
     }
 
     /**

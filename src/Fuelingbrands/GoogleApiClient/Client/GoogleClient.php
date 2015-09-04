@@ -17,6 +17,12 @@ class GoogleClient
      */
     protected $scopes;
 
+    protected $name;
+
+    private $private_key;
+
+    protected $impersonated_email;
+
     protected $is_service_account = false;
 
     /**
@@ -27,6 +33,10 @@ class GoogleClient
      */
     public function __construct($name, $private_key, $scopes = null, $impersonated_email = null)
     {
+        $this->name = $name;
+        $this->private_key = $private_key;
+        $this->impersonated_email = $impersonated_email;
+
         if(isset($scopes)) {
             $this->scopes = new Collection($scopes);
         } else {
@@ -34,25 +44,37 @@ class GoogleClient
         }
         $client = new \Google_Client();
 
-        $this->constructServiceAccountClient($client, $name, $private_key, $impersonated_email);
+        $this->constructServiceAccountClient($client);
     }
 
-    private function constructServiceAccountClient($client, $name, $private_key, $impersonated_email = null)
+    private function constructServiceAccountClient($client)
     {
-        $credentials = new \Google_Auth_AssertionCredentials(
-            $name,
-            $this->scopes->toArray(),
-            $private_key
-        );
-
-        if(isset($impersonated_email)) {
-            $credentials->sub = $impersonated_email;
-        }
-
-        $client->setAssertionCredentials($credentials);
+        $client->setAssertionCredentials($this->getNewCredentials());
 
         $this->client = $client;
         return $client;
+    }
+
+    public function reauthenticate()
+    {
+        $this->client->revokeToken();
+        $this->client->setAssertionCredentials($this->getNewCredentials());
+        $this->client->getAuth()->refreshTokenWithAssertion();
+    }
+
+    private function getNewCredentials()
+    {
+        $credentials = new \Google_Auth_AssertionCredentials(
+            $this->name,
+            $this->scopes->toArray(),
+            $this->private_key
+        );
+
+        if(isset($this->impersonated_email)) {
+            $credentials->sub = $this->impersonated_email;
+        }
+
+        return $credentials;
     }
 
     public function getAuth()
@@ -93,9 +115,8 @@ class GoogleClient
      */
     public function addScope($scope)
     {
-        $client = static::$instance;
-        $client->addScope($scope);
         $this->scopes->push($scope);
+        $this->reauthenticate();
     }
 
     /**
@@ -105,9 +126,8 @@ class GoogleClient
      */
     public function addScopes(array $scopes)
     {
-        $client = static::$instance;
-        $client->addScope($scopes);
         $this->scopes->merge($scopes);
+        $this->reauthenticate();
     }
 
     /**
