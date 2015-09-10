@@ -1,5 +1,6 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Client;
 
+use Fuelingbrands\GoogleApiClient\Cache\LaravelCache;
 use Illuminate\Support\Collection;
 
 /**
@@ -43,12 +44,14 @@ class GoogleClient
             $this->scopes = new Collection();
         }
         $client = new \Google_Client();
+        $client->setCache(new LaravelCache($client));
 
         $this->constructServiceAccountClient($client);
     }
 
     private function constructServiceAccountClient($client)
     {
+
         $client->setAssertionCredentials($this->getNewCredentials());
 
         $this->client = $client;
