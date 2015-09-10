@@ -11,13 +11,6 @@ abstract class SpreadsheetApi
 {
     use GoogleApiTrait;
 
-    protected $client;
-    protected $private_key;
-    protected $scopes;
-    protected $impersonated_email;
-    protected $email;
-    protected $service;
-
     /**
      * The Spreadsheet Scope to
      * authenticate with
