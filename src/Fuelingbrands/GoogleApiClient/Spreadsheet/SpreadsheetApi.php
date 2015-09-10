@@ -108,5 +108,5 @@ abstract class SpreadsheetApi
         return call_user_func_array([$this->service, $method], $parameters);
     }
 
-    abstract public function setCells(CellFeed $cells, array $cells);
+    abstract public function setCells($worksheet_id, array $cells);
 }

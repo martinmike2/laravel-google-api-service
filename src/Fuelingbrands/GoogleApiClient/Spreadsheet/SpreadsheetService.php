@@ -2,6 +2,10 @@
 
 use Google\Spreadsheet\CellFeed;
 
+/**
+ * Class SpreadsheetService
+ * @package Fuelingbrands\GoogleApiClient\Spreadsheet
+ */
 class SpreadsheetService extends SpreadsheetApi
 {
 
@@ -11,8 +15,9 @@ class SpreadsheetService extends SpreadsheetApi
      * @param CellFeed $feed
      * @param array $cells
      */
-    public function setCells(CellFeed $feed, array $cells)
+    public function setCells($worksheet_id, array $cells)
     {
+        $feed = $this->getService()->getCellFeed($worksheet_id);
         foreach ($feed->getEntries() as $cell)
         {
             foreach ($cells as $location => $value) {
@@ -25,11 +30,54 @@ class SpreadsheetService extends SpreadsheetApi
     }
 
     /**
+     * Get the content of a specific cell on the worksheet
+     *
+     * @param $worksheet_id
+     * @param $location
+     * @return null
+     */
+    public function readCell($worksheet_id, $location)
+    {
+        $feed = $this->getService()->getCellFeed($worksheet_id);
+
+        foreach ($feed->getEntries() as $cell)
+        {
+            if ($cell->getTitle() == $location)
+            {
+                return $cell->getContent();
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the content of a specific row on the worksheet
+     *
+     * @param $worksheet_id
+     * @param $row_number
+     * @return null
+     */
+    public function readRow($worksheet_id, $row_number)
+    {
+        $feed = $this->getService()->getListFeed($worksheet_id);
+
+        foreach($feed->getEntries() as $row)
+        {
+            if($row->getId() == $row_number) {
+                return $row->getContent();
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Tell the API which Service to use
      * @return mixed
      */
     protected function createService()
     {
-        return $this->getService();
+        return $this->getSpreadsheetService();
     }
 }
