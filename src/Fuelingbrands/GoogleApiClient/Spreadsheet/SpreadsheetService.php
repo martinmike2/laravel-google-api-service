@@ -9,15 +9,8 @@ use Google\Spreadsheet\CellFeed;
 class SpreadsheetService extends SpreadsheetApi
 {
 
-    /**
-     * Update google spreadsheet cell data
-     *
-     * @param CellFeed $feed
-     * @param array $cells
-     */
-    public function setCells($worksheet_id, array $cells)
+    public function setCells(CellFeed $feed, array $cells)
     {
-        $feed = $this->getService()->getCellFeed($worksheet_id);
         foreach ($feed->getEntries() as $cell)
         {
             foreach ($cells as $location => $value) {
@@ -29,25 +22,12 @@ class SpreadsheetService extends SpreadsheetApi
         }
     }
 
-    /**
-     * Get the content of a specific cell on the worksheet
-     *
-     * @param $worksheet_id
-     * @param $location
-     * @return null
-     */
-    public function readCell($worksheet_id, $location)
-    {
-        $feed = $this->getService()->getCellFeed($worksheet_id);
-
-        foreach ($feed->getEntries() as $cell)
-        {
-            if ($cell->getTitle() == $location)
-            {
+    public function readCell(CellFeed $feed, $location) {
+        foreach ($feed->getEntries() as $cell) {
+            if($cell->getTitle() == $location) {
                 return $cell->getContent();
             }
         }
-
         return null;
     }
 

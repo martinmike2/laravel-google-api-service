@@ -26,6 +26,7 @@ abstract class SpreadsheetApi
         $this->scopes = $scopes;
         $this->impersonated_email = $impersonated_email;
         $this->email = $email;
+        $this->service = $this->getSpreadsheetService();
     }
 
     public function getSpreadsheetService()
@@ -101,5 +102,5 @@ abstract class SpreadsheetApi
         return call_user_func_array([$this->service, $method], $parameters);
     }
 
-    abstract public function setCells($worksheet_id, array $cells);
+    abstract public function setCells(CellFeed $feed, array $cells);
 }
