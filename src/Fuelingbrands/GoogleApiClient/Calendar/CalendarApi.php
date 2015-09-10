@@ -7,6 +7,7 @@ abstract class CalendarApi
 {
     use GoogleApiTrait;
     protected $calendar;
+    protected $service;
 
     public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
@@ -16,6 +17,20 @@ abstract class CalendarApi
         $this->scopes = $scopes;
         $this->impersonated_email = $impersonated_email;
         $this->email = $email;
+    }
+
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    public function getService()
+    {
+        if(is_null($this->service)) {
+            $this->createService();
+        }
+
+        return $this->service;
     }
 
 }

@@ -2,6 +2,9 @@
 
 /**
  * Class AclService
+ *
+ * A Service for interacting with the ACL on a single Calendar
+ *
  * @package Fuelingbrands\GoogleApiClient\Calendar
  */
 class AclService extends CalendarApi
