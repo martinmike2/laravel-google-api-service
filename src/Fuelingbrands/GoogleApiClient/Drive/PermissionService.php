@@ -67,7 +67,7 @@ class PermissionService extends Drive
      */
     public function delete($file_id, $permission_id, $params = [])
     {
-        return $this->getService()-delete($file_id, $permission_id, $params);
+        return $this->getService()->delete($file_id, $permission_id, $params);
     }
 
     /**
