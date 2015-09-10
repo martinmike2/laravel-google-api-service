@@ -35,7 +35,7 @@ class LaravelCache extends \Google_Cache_Abstract
      */
     public function set($key, $value)
     {
-        \Cache::put($key, $value);
+        \Cache::put($key, $value, 60);
     }
 
     /**
