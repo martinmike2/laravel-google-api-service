@@ -1,5 +1,6 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Spreadsheet;
 
+use Fuelingbrands\GoogleApiClient\Api;
 use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
 use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
 use Google\Spreadsheet\CellFeed;
@@ -7,7 +8,7 @@ use Google\Spreadsheet\DefaultServiceRequest;
 use Google\Spreadsheet\ServiceRequestFactory;
 use Google\Spreadsheet\SpreadsheetService;
 
-abstract class SpreadsheetApi
+abstract class SpreadsheetApi extends Api
 {
     use GoogleApiTrait;
 
@@ -19,14 +20,16 @@ abstract class SpreadsheetApi
      */
     protected $scope = 'https://spreadsheets.google.com/feeds';
 
-    public function __construct($email, $private_key, $scopes, $impersonated_email)
+    /**
+     * @param $email
+     * @param $private_key
+     * @param array $scopes
+     * @param $impersonated_email
+     */
+    public function __construct($email, $private_key, array $scopes, $impersonated_email)
     {
-        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
-        $this->private_key = $private_key;
-        $this->scopes = $scopes;
-        $this->impersonated_email = $impersonated_email;
-        $this->email = $email;
         $this->service = $this->getSpreadsheetService();
+        parent::__construct($email, $private_key, $scopes, $impersonated_email);
     }
 
     public function getSpreadsheetService()
