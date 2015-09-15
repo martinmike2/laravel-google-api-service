@@ -1,6 +1,7 @@
 <?php namespace Fuelingbrands\GoogleApiClient;
 
 use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
+use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
 
 abstract class Api
 {
