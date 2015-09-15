@@ -18,7 +18,7 @@ class GoogleApiClientServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+
 	}
 
 	/**

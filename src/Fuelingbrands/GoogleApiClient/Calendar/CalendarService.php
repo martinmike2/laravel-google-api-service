@@ -75,4 +75,62 @@ class CalendarService extends CalendarApi
         }
     }
 
+    /**
+     * Creates a secondary calendar
+     *
+     * @param string $title
+     * @param string null $description
+     * @param string null $location
+     * @param string null $timezone
+     *
+     * @return \Google_Service_Calendar_Calendar|null
+     */
+    public function insert($title, $description = null, $location = null, $timezone = null)
+    {
+        try {
+            $calendar = new \Google_Service_Calendar_Calendar();
+            $calendar->setSummary($title);
+            $calendar->setDescription($description);
+            $calendar->setLocation($location);
+            $calendar->setTimeZone($timezone);
+
+            return $this->getService()->insert($calendar);
+
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Updates the metadata for a calendar (Supports PATCH semantics)
+     * @param $calendar_id
+     * @param \Google_Service_Calendar_Calendar $calendar
+     * @return \Google_Service_Calendar_Calendar|null
+     */
+    public function patch($calendar_id, \Google_Service_Calendar_Calendar $calendar)
+    {
+        try {
+            return $this->getService()->patch($calendar_id, $calendar);
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Updates metadata for a calendar (Does NOT support PATCH semantics)
+     * @param $calendar_id
+     * @param \Google_Service_Calendar_Calendar $calendar
+     * @return \Google_Service_Calendar_Calendar|null
+     */
+    public function update($calendar_id, \Google_Service_Calendar_Calendar $calendar)
+    {
+        try {
+            return $this->getService()->update($calendar_id, $calendar);
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
+    }
 }

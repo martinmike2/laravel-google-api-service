@@ -1,29 +1,53 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Calendar;
 
+use Fuelingbrands\GoogleApiClient\Api;
 use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
 use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
 
-abstract class CalendarApi
+/**
+ * Class CalendarApi
+ * @package Fuelingbrands\GoogleApiClient\Calendar
+ */
+abstract class CalendarApi extends Api
 {
     use GoogleApiTrait;
+
+    /**
+     *
+     */
+    const CALENDAR_FULL_SCOPE = 'https://www.googleapis.com/auth/calendar';
+    /**
+     *
+     */
+    const CALENDAR_READONLY_SCOPE = 'https://www.googleapis.com/auth/calendar.readonly';
+
+    /**
+     * @var
+     */
     protected $calendar;
+    /**
+     * @var
+     */
     protected $service;
 
-    public function __construct($email, $private_key, $scopes, $impersonated_email)
+
+    /**
+     * @param $email
+     * @param $private_key
+     * @param array $scopes
+     * @param $impersonated_email
+     */
+    public function __construct($email, $private_key, array $scopes, $impersonated_email)
     {
-        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
         $this->calendar = new \Google_Service_Calendar($this->client);
-        $this->private_key = $private_key;
-        $this->scopes = $scopes;
-        $this->impersonated_email = $impersonated_email;
-        $this->email = $email;
+        parent::__construct($email, $private_key, $scopes, $impersonated_email);
     }
 
-    public function getClient()
-    {
-        return $this->client;
-    }
-
+    /**
+     * Return the service required for the api
+     *
+     * @return mixed
+     */
     public function getService()
     {
         if(is_null($this->service)) {
@@ -31,6 +55,16 @@ abstract class CalendarApi
         }
 
         return $this->service;
+    }
+
+    /**
+     * Return the base resource required by the service
+     *
+     * @return mixed
+     */
+    public function getResource()
+    {
+        return new \Google_Service_Calendar_Calendar;
     }
 
 }
