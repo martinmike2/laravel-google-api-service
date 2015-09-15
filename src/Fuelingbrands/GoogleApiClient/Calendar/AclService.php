@@ -25,11 +25,17 @@ class AclService extends CalendarApi
      *
      * @param $calendar_id
      * @param $rule_id
+     * @param array $params
      * @return mixed
      */
-    public function delete($calendar_id, $rule_id)
+    public function delete($calendar_id, $rule_id, $params = [])
     {
-        return $this->getService()->delete($calendar_id, $rule_id);
+        try{
+            return $this->getService()->delete($calendar_id, $rule_id, $params);
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -37,11 +43,17 @@ class AclService extends CalendarApi
      *
      * @param $calendar_id
      * @param $rule_id
+     * @param array $params
      * @return mixed
      */
-    public function get($calendar_id, $rule_id)
+    public function get($calendar_id, $rule_id, $params = [])
     {
-        return $this->getService()->get($calendar_id, $rule_id);
+        try {
+            return $this->getService()->get($calendar_id, $rule_id, $params);
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -51,9 +63,10 @@ class AclService extends CalendarApi
      * @param $role
      * @param $scope_type
      * @param $scope_value
+     * @param array $params
      * @return mixed
      */
-    public function insert($calendar_id, $role, $scope_type, $scope_value)
+    public function insert($calendar_id, $role, $scope_type, $scope_value, $params = [])
     {
         $rule = new \Google_Service_Calendar_AclRule();
         $scope = new \Google_Service_Calendar_AclRuleScope();
@@ -64,7 +77,12 @@ class AclService extends CalendarApi
         $rule->setScope($scope);
         $rule->setRole($role);
 
-        return $this->getService()->insert($calendar_id, $rule);
+        try {
+            return $this->getService()->insert($calendar_id, $rule, $params);
+        }catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -73,9 +91,14 @@ class AclService extends CalendarApi
      * @param $calendar_id
      * @return mixed
      */
-    public function listAll($calendar_id)
+    public function listAll($calendar_id, $params = [])
     {
-        return $this->getService()->listAcl($calendar_id);
+        try {
+            return $this->getService()->listAcl($calendar_id, $params);
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -84,14 +107,20 @@ class AclService extends CalendarApi
      * @param $calendar_id
      * @param $rule_id
      * @param $role
+     * @param array $params
      * @return mixed
      */
-    public function update($calendar_id, $rule_id, $role)
+    public function update($calendar_id, $rule_id, $role, $params = [])
     {
         $rule = $this->get($calendar_id, $rule_id);
         $rule->setRole($role);
 
-        return $this->update($calendar_id, $rule->getId(), $rule);
+        try {
+            return $this->update($calendar_id, $rule->getId(), $rule, $params);
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
     }
 
     /**
@@ -100,11 +129,21 @@ class AclService extends CalendarApi
      * @param $calendar_id
      * @param $rule_id
      * @param $role
+     * @param array $params
      * @return mixed
      */
-    public function patch($calendar_id, $rule_id, $role)
+    public function patch($calendar_id, $rule_id, $role, $params = [])
     {
-        return $this->update($calendar_id, $rule_id, $role);
+        try {
+            return $this->update($calendar_id, $rule_id, $role, $params);
+        } catch (\Google_Service_Exception $e) {
+            \Log::error($e->getMessage());
+            return null;
+        }
     }
 
+    public function getResource()
+    {
+        return new \Google_Service_Calendar_Acl();
+    }
 }

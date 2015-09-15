@@ -32,10 +32,10 @@ class CalendarService extends CalendarApi
      * @param string $calendar_id
      * @return \Google_Service_Calendar_Calendar|null
      */
-    public function clear($calendar_id)
+    public function clear($calendar_id, $params = [])
     {
         try {
-            return $this->getService()->clear($calendar_id);
+            return $this->getService()->clear($calendar_id, $params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return null;
@@ -48,10 +48,10 @@ class CalendarService extends CalendarApi
      * @param string $calendar_id
      * @return boolean
      */
-    public function delete($calendar_id)
+    public function delete($calendar_id, $params = [])
     {
         try {
-            $this->getService()->delete($calendar_id);
+            $this->getService()->delete($calendar_id, $params);
             return true;
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
@@ -65,10 +65,10 @@ class CalendarService extends CalendarApi
      * @param string $calendar_id
      * @return \Google_Service_Calendar_Calendar|null
      */
-    public function get($calendar_id)
+    public function get($calendar_id, $params = [])
     {
         try {
-            return $this->getService()->get($calendar_id);
+            return $this->getService()->get($calendar_id, $params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return null;
@@ -85,16 +85,16 @@ class CalendarService extends CalendarApi
      *
      * @return \Google_Service_Calendar_Calendar|null
      */
-    public function insert($title, $description = null, $location = null, $timezone = null)
+    public function insert($title, $description = null, $location = null, $timezone = null, $params = [])
     {
         try {
-            $calendar = new \Google_Service_Calendar_Calendar();
+            $calendar = $this->getResource();
             $calendar->setSummary($title);
             $calendar->setDescription($description);
             $calendar->setLocation($location);
             $calendar->setTimeZone($timezone);
 
-            return $this->getService()->insert($calendar);
+            return $this->getService()->insert($calendar, $params);
 
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
@@ -108,10 +108,10 @@ class CalendarService extends CalendarApi
      * @param \Google_Service_Calendar_Calendar $calendar
      * @return \Google_Service_Calendar_Calendar|null
      */
-    public function patch($calendar_id, \Google_Service_Calendar_Calendar $calendar)
+    public function patch($calendar_id, \Google_Service_Calendar_Calendar $calendar, $params = [])
     {
         try {
-            return $this->getService()->patch($calendar_id, $calendar);
+            return $this->getService()->patch($calendar_id, $calendar, $params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return null;
@@ -124,13 +124,18 @@ class CalendarService extends CalendarApi
      * @param \Google_Service_Calendar_Calendar $calendar
      * @return \Google_Service_Calendar_Calendar|null
      */
-    public function update($calendar_id, \Google_Service_Calendar_Calendar $calendar)
+    public function update($calendar_id, \Google_Service_Calendar_Calendar $calendar, $params = [])
     {
         try {
-            return $this->getService()->update($calendar_id, $calendar);
+            return $this->getService()->update($calendar_id, $calendar, $params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return null;
         }
+    }
+
+    public function getResource()
+    {
+        return new \Google_Service_Calendar_Calendar();
     }
 }

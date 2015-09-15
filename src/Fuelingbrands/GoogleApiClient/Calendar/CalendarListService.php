@@ -26,7 +26,7 @@ class CalendarListService extends CalendarApi
      * @param string $calendar_id
      * @return bool
      */
-    public function delete($calendar_id)
+    public function delete($calendar_id, $params = [])
     {
         try {
             $this->getService()->delete($calendar_id);
@@ -43,10 +43,10 @@ class CalendarListService extends CalendarApi
      * @param string $calendar_id
      * @return \Google_Service_Calendar_CalendarListEntry|null
      */
-    public function get($calendar_id)
+    public function get($calendar_id, $params = [])
     {
         try {
-            return $this->getService()->get($calendar_id);
+            return $this->getService()->get($calendar_id, $params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return null;
@@ -59,13 +59,13 @@ class CalendarListService extends CalendarApi
      * @param string $calendar_id
      * @return \Google_Service_Calendar_CalendarListEntry|null
      */
-    public function insert($calendar_id)
+    public function insert($calendar_id, $params = [])
     {
         $calendar_list_entry = new \Google_Service_Calendar_CalendarListEntry();
         $calendar_list_entry->setId($calendar_id);
 
         try {
-            return $this->getService()->insert($calendar_list_entry);
+            return $this->getService()->insert($calendar_list_entry, $params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return null;
@@ -78,10 +78,10 @@ class CalendarListService extends CalendarApi
      *
      * @return \Google_Service_Calendar_CalendarList|array
      */
-    public function listCalendarList()
+    public function listCalendarList($params = [])
     {
         try {
-            return $this->getService()->listCalendarList();
+            return $this->getService()->listCalendarList($params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return [];
@@ -141,5 +141,10 @@ class CalendarListService extends CalendarApi
             \Log::error($e->getMessage());
             return null;
         }
+    }
+
+    public function getResource()
+    {
+        return new \Google_Service_Calendar_CalendarList();
     }
 }
