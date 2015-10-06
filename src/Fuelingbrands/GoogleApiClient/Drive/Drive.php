@@ -34,7 +34,7 @@ abstract class Drive
         $this->impersonated_email = $impersonated_email;
         $this->email = $email;
 
-        $this->calendar = new \Google_Service_Drive($this->client);
+        $this->calendar = new \Google_Service_Drive($this->client->client);
 
     }
 
