@@ -1,13 +1,14 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Directory;
 
 use Fuelingbrands\GoogleApiClient\Api;
+use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
 use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
 
 /**
  * Class Directory
  * @package Fuelingbrands\GoogleApiClient\Directory
  */
-abstract class Directory extends Api
+abstract class Directory
 {
     use GoogleApiTrait;
 
@@ -100,16 +101,18 @@ abstract class Directory extends Api
      */
     const DIRECTORY_NOTIFICATIONS = 'https://www.googleapis.com/auth/admin.directory.notifications';
 
-    /**
-     * @param $email
-     * @param $private_key
-     * @param array $scopes
-     * @param $impersonated_email
-     */
-    public function __construct($email, $private_key, array $scopes, $impersonated_email)
+    public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
-        $this->directory = new \Google_Service_Directory($this->client);
-        parent::__construct($email, $private_key, $scopes, $impersonated_email);
+        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
+        $this->private_key = $private_key;
+        $this->scopes = $scopes;
+        $this->impersonated_email = $impersonated_email;
+        $this->email = $email;
+    }
+
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**

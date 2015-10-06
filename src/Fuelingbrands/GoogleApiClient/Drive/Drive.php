@@ -4,7 +4,7 @@ use Fuelingbrands\GoogleApiClient\Api;
 use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
 use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
 
-abstract class Drive extends Api
+abstract class Drive
 {
     use GoogleApiTrait;
     protected $drive;
@@ -36,6 +36,11 @@ abstract class Drive extends Api
 
         $this->calendar = new \Google_Service_Drive($this->client);
 
+    }
+
+    public function getClient()
+    {
+        return $this->client;
     }
 
     /**

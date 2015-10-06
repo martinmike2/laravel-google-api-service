@@ -15,14 +15,6 @@ abstract class Api
         $this->scopes = $scopes;
         $this->impersonated_email = $impersonated_email;
         $this->email = $email;
-
-
-        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
-        $this->drive = new \Google_Service_Drive($this->client->client);
-        $this->private_key = $private_key;
-        $this->scopes = $scopes;
-        $this->impersonated_email = $impersonated_email;
-        $this->email = $email;
     }
 
     public function getClient()
