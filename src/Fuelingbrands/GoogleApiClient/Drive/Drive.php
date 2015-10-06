@@ -43,19 +43,6 @@ abstract class Drive
         return $this->client;
     }
 
-    /**
-     * Return the service required for the api
-     *
-     * @return mixed
-     */
-    public function getService()
-    {
-        if (is_null($this->service)) {
-            $this->createService();
-        }
-
-        return $this->service;
-    }
 
     /**
      * Return the base resource required by the service
