@@ -8,7 +8,7 @@ use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
  * Class CalendarApi
  * @package Fuelingbrands\GoogleApiClient\Calendar
  */
-abstract class CalendarApi
+abstract class CalendarApi extends Api
 {
     use GoogleApiTrait;
 
@@ -33,11 +33,7 @@ abstract class CalendarApi
 
     public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
-        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
-        $this->private_key = $private_key;
-        $this->scopes = $scopes;
-        $this->impersonated_email = $impersonated_email;
-        $this->email = $email;
+        parent::__construct($email, $private_key, $scopes, $impersonated_email);
     }
 
     public function getClient()

@@ -8,7 +8,7 @@ use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
  * Class Directory
  * @package Fuelingbrands\GoogleApiClient\Directory
  */
-abstract class Directory
+abstract class DirectoryApi extends Api
 {
     use GoogleApiTrait;
 
@@ -39,11 +39,7 @@ abstract class Directory
 
     public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
-        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
-        $this->private_key = $private_key;
-        $this->scopes = $scopes;
-        $this->impersonated_email = $impersonated_email;
-        $this->email = $email;
+        parent::_construct($email, $private_key, $scopes, $impersonated_email);
     }
 
     public function getClient()

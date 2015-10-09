@@ -4,7 +4,7 @@ use Fuelingbrands\GoogleApiClient\Api;
 use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
 use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
 
-abstract class Drive
+abstract class Drive extends Api
 {
     use GoogleApiTrait;
     protected $drive;
@@ -27,13 +27,7 @@ abstract class Drive
      */
     public function __construct($email, $private_key, array $scopes, $impersonated_email)
     {
-        $this->client = GoogleClient::getInstance($email, $private_key, $scopes, $impersonated_email);
-        $this->drive = new \Google_Service_Drive($this->client->client);
-        $this->private_key = $private_key;
-        $this->scopes = $scopes;
-        $this->impersonated_email = $impersonated_email;
-        $this->email = $email;
-
+        parent::__construct($email, $private_key, $scopes, $impersonated_email);
         $this->calendar = new \Google_Service_Drive($this->client->client);
 
     }

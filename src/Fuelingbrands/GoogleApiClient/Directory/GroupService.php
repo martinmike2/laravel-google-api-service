@@ -8,7 +8,7 @@
  *
  * @package Fuelingbrands\GoogleApiClient\Directory
  */
-class GroupService extends Directory
+class GroupService extends DirectoryApi
 {
 
     /**
@@ -17,6 +17,7 @@ class GroupService extends Directory
      */
     protected function createService()
     {
+        $this->getClient()->addScopes([DirectoryApi::GROUP_GLOBAL, DirectoryApi::GROUP_READONLY]);
         return $this->directory->groups;
     }
 

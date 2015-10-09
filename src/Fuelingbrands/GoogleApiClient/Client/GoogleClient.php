@@ -26,6 +26,8 @@ class GoogleClient
 
     protected $is_service_account = false;
 
+    public $client;
+
     /**
      * @param $serviceAccountName
      * @param $private_key
@@ -119,6 +121,7 @@ class GoogleClient
     public function addScope($scope)
     {
         $this->scopes->push($scope);
+        $this->client->addScope($scope);
         $this->reauthenticate();
     }
 
@@ -130,6 +133,7 @@ class GoogleClient
     public function addScopes(array $scopes)
     {
         $this->scopes->merge($scopes);
+        $this->client->addScopes($scopes);
         $this->reauthenticate();
     }
 

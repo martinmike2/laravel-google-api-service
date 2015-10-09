@@ -8,7 +8,7 @@
  *
  * @package Fuelingbrands\GoogleApiClient\Directory
  */
-class MemberService extends Directory
+class MemberService extends DirectoryApi
 {
 
     /**
@@ -17,6 +17,7 @@ class MemberService extends Directory
      */
     protected function createService()
     {
+        $this->getClient()->addScopes([DirectoryApi::GROUP_GLOBAL, DirectoryApi::GROUP_READONLY]);
         return $this->directory->members;
     }
 
@@ -90,7 +91,7 @@ class MemberService extends Directory
     public function listMembers($group_key, $params = [])
     {
         try {
-            return $this->getService()->listGroups($group_key, $params);
+            return $this->getService()->listMembers($group_key, $params);
         } catch (\Google_Service_Exception $e) {
             \Log::error($e->getMessage());
             return null;
