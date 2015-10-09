@@ -133,7 +133,7 @@ class GoogleClient
     public function addScopes(array $scopes)
     {
         $this->scopes->merge($scopes);
-        $this->client->addScopes($scopes);
+        $this->client->addScope($scopes);
         $this->reauthenticate();
     }
 
