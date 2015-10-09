@@ -46,6 +46,7 @@ class GoogleClient
             $this->scopes = new Collection();
         }
         $client = new \Google_Client();
+        $client->addScope($this->scopes);
         $client->setCache(new LaravelCache($client));
 
         $this->constructServiceAccountClient($client);

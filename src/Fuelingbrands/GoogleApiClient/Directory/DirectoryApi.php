@@ -40,6 +40,7 @@ abstract class DirectoryApi extends Api
     public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
         parent::__construct($email, $private_key, $scopes, $impersonated_email);
+        $this->directory = new \Google_Service_Directory($this->client->client);
     }
 
     /**
