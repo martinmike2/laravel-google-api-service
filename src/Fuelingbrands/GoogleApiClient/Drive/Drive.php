@@ -29,7 +29,7 @@ abstract class Drive extends Api
     {
         parent::__construct($email, $private_key, $scopes, $impersonated_email);
         $this->calendar = new \Google_Service_Drive($this->client->client);
-
+        $this->drive = new \Google_Service_Drive($this->client->client);
     }
 
     public function getClient()
