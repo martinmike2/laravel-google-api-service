@@ -42,11 +42,6 @@ abstract class DirectoryApi extends Api
         parent::_construct($email, $private_key, $scopes, $impersonated_email);
     }
 
-    public function getClient()
-    {
-        return $this->client;
-    }
-
     /**
      * Return the base resource required by the service
      *

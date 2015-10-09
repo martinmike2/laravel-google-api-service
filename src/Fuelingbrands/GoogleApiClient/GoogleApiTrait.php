@@ -9,10 +9,6 @@ trait GoogleApiTrait
     /**
      * @var
      */
-    protected $client;
-    /**
-     * @var
-     */
     protected $service;
     /**
      * @var
@@ -41,11 +37,6 @@ trait GoogleApiTrait
         }
 
         return $this->service;
-    }
-
-    public function getClient()
-    {
-        return $this->client;
     }
 
     /**
