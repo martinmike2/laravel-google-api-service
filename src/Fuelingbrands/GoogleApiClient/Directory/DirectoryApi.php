@@ -39,7 +39,7 @@ abstract class DirectoryApi extends Api
 
     public function __construct($email, $private_key, $scopes, $impersonated_email)
     {
-        parent::_construct($email, $private_key, $scopes, $impersonated_email);
+        parent::__construct($email, $private_key, $scopes, $impersonated_email);
     }
 
     /**
