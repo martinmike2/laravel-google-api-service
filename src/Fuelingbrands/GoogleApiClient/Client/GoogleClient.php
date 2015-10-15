@@ -29,10 +29,11 @@ class GoogleClient
     public $client;
 
     /**
-     * @param $serviceAccountName
+     * @param $name
      * @param $private_key
      * @param array|null $scopes
      * @param null $impersonated_email
+     * @internal param $serviceAccountName
      */
     public function __construct($name, $private_key, $scopes = null, $impersonated_email = null)
     {

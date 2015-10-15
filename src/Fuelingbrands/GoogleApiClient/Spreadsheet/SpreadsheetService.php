@@ -60,4 +60,14 @@ class SpreadsheetService extends SpreadsheetApi
     {
         return $this->getSpreadsheetService();
     }
+
+    /**
+     * Return the base resource required by the service
+     *
+     * @return mixed
+     */
+    public function getResource()
+    {
+        // TODO: Implement getResource() method.
+    }
 }
