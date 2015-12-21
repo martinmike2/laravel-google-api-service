@@ -2,6 +2,7 @@
 
 use Fuelingbrands\GoogleApiClient\Client\GoogleClient;
 use Fuelingbrands\GoogleApiClient\GoogleApiTrait;
+use Fuelingbrands\GoogleApiClient\Logger\LaravelLogger;
 
 abstract class Api
 {
