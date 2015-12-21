@@ -2,12 +2,23 @@
 
 use Google_Client;
 
-class LaravelCache implements CacheInterface
+/**
+ * Class LaravelCache
+ * @package Fuelingbrands\GoogleApiClient\Cache
+ */
+class LaravelCache extends \Google_Cache_Abstract
 {
 
+    /**
+     * @var Google_Client
+     */
     protected $client;
 
 
+    /**
+     * LaravelCache constructor.
+     * @param Google_Client $client
+     */
     public function __construct(Google_Client $client)
     {
         $this->client = $client;
