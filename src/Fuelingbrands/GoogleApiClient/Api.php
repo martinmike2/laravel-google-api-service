@@ -27,7 +27,12 @@ abstract class Api
     public function getLogger()
     {
         $logger = \Config::get('logger');
-        $this->logger = new $logger;
+
+        if (empty($logger)) {
+            $this->logger = new LaravelLogger();
+        } else {
+            $this->logger = new $logger;
+        }
     }
 
     public function getClient()
