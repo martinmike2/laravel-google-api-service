@@ -1,9 +1,8 @@
 <?php namespace Fuelingbrands\GoogleApiClient\Cache;
 
-use Google_Cache_Abstract;
 use Google_Client;
 
-class LaravelCache extends Google_Cache_Abstract
+class LaravelCache implements CacheInterface
 {
 
     protected $client;

@@ -95,7 +95,7 @@ abstract class SpreadsheetApi extends Api
      */
     public function __call($method, $parameters)
     {
-        return call_user_func_array([$this->service, $method], $parameters);
+        return call_user_func_array([$this->getSpreadsheetService(), $method], $parameters);
     }
 
     abstract public function setCells(CellFeed $feed, array $cells);
