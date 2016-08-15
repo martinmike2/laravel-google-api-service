@@ -116,6 +116,16 @@ class GoogleClient
     }
 
     /**
+     * Get the google client
+     *
+     * @return \Google_Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
      * Add a single scope to the client
      *
      * @param $scope
